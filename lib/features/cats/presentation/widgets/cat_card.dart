@@ -15,39 +15,28 @@ class CatCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Imagen del gato
-            if (cat.imageUrl != null)
-              Center(
-                child: Image.network(
-                  cat.imageUrl!,
-                  height: 150,
-                  fit: BoxFit.cover,
-                ),
-              )
-            else
-              const Center(
-                child: Icon(Icons.pets, size: 100, color: Colors.grey),
-              ),
-
+            Center(
+              child: (cat.imageUrl != null && Uri.tryParse(cat.imageUrl!)?.hasAbsolutePath == true)
+                  ? Image.network(
+                      cat.imageUrl!,
+                      height: 150,
+                      fit: BoxFit.cover,
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return const Center(child: CircularProgressIndicator());
+                      },
+                      errorBuilder: (context, error, stackTrace) {
+                        print('Error loading image: $error');
+                        return const Icon(Icons.broken_image, size: 100, color: Colors.grey);
+                      },
+                    )
+                  : const Icon(Icons.pets, size: 100, color: Colors.grey),
+            ),
             const SizedBox(height: 16),
-
-            // Nombre del gato
-            Text(
-              'Name: ${cat.name}',
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-
+            Text('Name: ${cat.name}', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
-
-            // Origen del gato
-            Text(
-              'Origin: ${cat.origin}',
-              style: const TextStyle(fontSize: 16),
-            ),
-
+            Text('Origin: ${cat.origin}', style: const TextStyle(fontSize: 16)),
             const SizedBox(height: 8),
-
-            // Nivel de energía
             Row(
               children: [
                 const Text('Energy Level:'),
@@ -57,23 +46,14 @@ class CatCard extends StatelessWidget {
                     min: 0,
                     max: 5,
                     divisions: 5,
-                    onChanged: null, // Solo lectura
+                    onChanged: null,
                   ),
                 ),
               ],
             ),
-
             const SizedBox(height: 8),
-
-            // Descripción
-            Text(
-              'Description:',
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Text(
-              cat.description,
-              style: const TextStyle(fontSize: 14),
-            ),
+            Text('Description:', style: const TextStyle(fontWeight: FontWeight.bold)),
+            Text(cat.description, style: const TextStyle(fontSize: 14)),
           ],
         ),
       ),

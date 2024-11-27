@@ -1,14 +1,12 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../../../../core/app_constans.dart';
 import 'cat_dto.dart';
-
+import '../../../../../../core/app_constans.dart';
 class CatService {
   final http.Client client;
 
   CatService({required this.client});
 
-  /// Obtiene la lista de razas de gatos desde el endpoint `/breeds`
   Future<List<CatDto>> fetchCats() async {
     final Uri url = Uri.parse(AppConstants.breedsEndpoint);
 

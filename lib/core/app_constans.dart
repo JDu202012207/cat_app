@@ -2,9 +2,9 @@ class AppConstants {
   // Base URL de la API
   static const String apiBaseUrl = 'https://api.thecatapi.com/v1/';
 
-  // Endpoints de la API
+ // Endpoints de la API
   static const String breedsEndpoint = '${apiBaseUrl}breeds';
-  static const String randomImageEndpoint = '${apiBaseUrl}images/search';
+  static const String imageEndpoint = '${apiBaseUrl}images/';
 
   // Base de datos local
   static const String localDatabaseName = 'cats_app.db';
